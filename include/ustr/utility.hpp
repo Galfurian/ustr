@@ -55,7 +55,7 @@ const char *to_human_size(unsigned long bytes)
             double_bytes = static_cast<double>(bytes) / 1024.0;
         }
     }
-    sprintf(output, "%.02lf %2s", double_bytes, suffix[i]);
+    snprintf(output, 200, "%.02lf %2s", double_bytes, suffix[i]);
     return output;
 }
 
