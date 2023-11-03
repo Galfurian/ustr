@@ -117,7 +117,7 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
 /// @return false otherwise.
 inline bool compare(const std::string &s0, const std::string &s1, bool sensitive, unsigned n)
 {
-    typename std::string::const_iterator it0 = s0.begin(), it1 = s1.begin();
+    std::string::const_iterator it0 = s0.begin(), it1 = s1.begin();
     while ((it0 != s0.end()) && (it1 != s1.end()) && details::compare_char(*it0, *it1, sensitive)) {
         if ((n > 0) && (--n <= 0)) {
             return true;
