@@ -38,6 +38,7 @@ mark_as_advanced(FORCE
 option(${PROJECT_NAME}_STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(${PROJECT_NAME}_WARNINGS_AS_ERRORS "Treat all warnings as errors" OFF)
 option(${PROJECT_NAME}_BUILD_EXAMPLES "Build examples" OFF)
+option(${PROJECT_NAME}_BUILD_TESTS "Build tests" OFF)
 
 # -----------------------------------------------------------------------------
 # DEPENDENCIES
@@ -97,6 +98,24 @@ if(${PROJECT_NAME}_BUILD_EXAMPLES)
     add_executable(${PROJECT_NAME}_simple ${PROJECT_SOURCE_DIR}/examples/simple.cpp)
     # Set the linked libraries.
     target_link_libraries(${PROJECT_NAME}_simple PUBLIC ${PROJECT_NAME})
+
+endif()
+
+# -----------------------------------------------------------------------------
+# TESTS
+# -----------------------------------------------------------------------------
+
+if(${PROJECT_NAME}_BUILD_TESTS)
+
+    # CMake has support for adding tests to a project.
+    enable_testing()
+
+    # Add the test.
+    add_executable(${PROJECT_NAME}_test_check ${PROJECT_SOURCE_DIR}/tests/test_check.cpp)
+    # Liking for the test.
+    target_link_libraries(${PROJECT_NAME}_test_check ${PROJECT_NAME})
+    # Add the test.
+    add_test(${PROJECT_NAME}_test_check_run ${PROJECT_NAME}_test_check)
 
 endif()
 
