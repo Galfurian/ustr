@@ -1,0 +1,32 @@
+name: Ubuntu
+on:
+    push:
+        branches-ignore:
+            - "releases/**"
+        paths-ignore:
+            - "**.md"
+            - ".gitignore"
+            - "macos.yml"
+            - "windows.yml"
+    pull_request:
+        paths-ignore:
+            - "**.md"
+            - ".gitignore"
+            - "macos.yml"
+            - "windows.yml"
+jobs:
+    doxygen:
+        name: Doxygen
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone repository
+              uses: actions/checkout@v3
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y doxygen
+            - name: Generate documentation
+              run: |
+                  cmake -B build -DDOXYGEN_WARN_AS_ERROR=NO
+                  cmake --build build --target ustr_documentation
+    
