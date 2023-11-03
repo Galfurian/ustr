@@ -125,7 +125,7 @@ inline std::string &replace(std::string &s, const std::string &substring, const 
 /// @param width the width of the paragraphs.
 /// @param whitespace the filler character.
 /// @return the string splitted into paragraphs.
-std::string split_paragraph(std::string s, std::string::size_type width, std::string whitespace = " \t\r")
+inline std::string split_paragraph(std::string s, std::string::size_type width, std::string whitespace = " \t\r")
 {
     std::string::size_type index = width - 1, index_nl = width - 1, to_trim;
 
@@ -152,7 +152,7 @@ std::string split_paragraph(std::string s, std::string::size_type width, std::st
 /// @brief Transforms a paragraph formatted string into a single line.
 /// @param s the string to manipulate.
 /// @return the single line.
-std::string merge_paragraph(std::string s)
+inline std::string merge_paragraph(std::string s)
 {
     for (std::string::size_type i = 1, j = 1; i < s.length(); ++i) {
         if (s[i] == ' ') {
@@ -208,7 +208,7 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 /// @param s the input string.
 /// @param occurences the number of occurences we need to manipulate.
 /// @return the string with the first letter capitalized.
-std::string capitalize(std::string s, int occurences = 1)
+inline std::string capitalize(std::string s, int occurences = 1)
 {
     if (!s.empty() && (occurences != 0)) {
         // Find the first occurence.
@@ -228,7 +228,7 @@ std::string capitalize(std::string s, int occurences = 1)
 /// @param s La stringa sorgente.
 /// @param occurences the number of occurences we need to manipulate.
 /// @return La stringa con la prima lettera minuscola.
-std::string decapitalize(std::string s, int occurences = 1)
+inline std::string decapitalize(std::string s, int occurences = 1)
 {
     if (!s.empty() && (occurences != 0)) {
         // Find the first occurence.

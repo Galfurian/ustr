@@ -15,7 +15,7 @@ namespace ustr
 /// @param s the string to turn into a number.
 /// @return the number.
 template <typename T>
-T to_number(const std::string &s)
+inline T to_number(const std::string &s)
 {
     char *pEnd;
     return static_cast<T>(strtol(s.c_str(), &pEnd, 10));
@@ -25,7 +25,7 @@ T to_number(const std::string &s)
 /// @param s the string to turn into a number.
 /// @return the number.
 template <typename T>
-T to_double(const std::string &s)
+inline T to_double(const std::string &s)
 {
     char *pEnd;
     return static_cast<T>(strtod(s.c_str(), &pEnd));
@@ -35,7 +35,7 @@ T to_double(const std::string &s)
 /// @param value the value to transform.
 /// @return the string representation of the value.
 template <typename T>
-std::string to_string(const T &value)
+inline std::string to_string(const T &value)
 {
     std::stringstream ss;
     ss << value;
@@ -57,7 +57,7 @@ inline bool is_number(const std::string &s)
 /// @brief Transforms the given amount of bytes to a readable string.
 /// @param bytes The bytes to turn to string.
 /// @return String representing the bytes in human readable form.
-const char *to_human_size(unsigned long bytes)
+inline const char *to_human_size(unsigned long bytes)
 {
     static char output[200];
     const char *suffix[] = { "B", "KB", "MB", "GB", "TB" };
@@ -77,7 +77,7 @@ const char *to_human_size(unsigned long bytes)
 /// @param value to print.
 /// @param length of the binary output.
 /// @return String representing the binary value.
-const char *decimal_to_binary_string(unsigned long value, unsigned length)
+inline const char *decimal_to_binary_string(unsigned long value, unsigned length)
 {
     static char buffer[33];
     for (unsigned i = 0; i < 33; ++i) {
