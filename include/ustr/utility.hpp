@@ -69,7 +69,7 @@ const char *decimal_to_binary_string(unsigned long value, unsigned length)
     for (unsigned i = 0; i < 33; ++i) {
         buffer[i] = 0;
     }
-    for (unsigned i = 0, j = 32 - std::min(std::max(0U, length), 32U); j < 32; ++i, ++j) {
+    for (unsigned i = 0, j = 32 - std::min(length, 32U); j < 32; ++i, ++j) {
         buffer[i] = (value & (1U << (31U - j))) ? '1' : '0';
     }
     return buffer;
