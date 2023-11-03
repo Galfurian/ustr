@@ -44,8 +44,9 @@ inline std::string rtrim(const std::string &s, const std::string &padchar = " ")
 /// @return the new string.
 inline std::string to_upper(std::string s)
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it)
+    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
         *it = static_cast<char>(toupper(*it));
+    }
     return s;
 }
 
@@ -54,8 +55,9 @@ inline std::string to_upper(std::string s)
 /// @return the new string.
 inline std::string to_lower(std::string s)
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it)
+    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
         *it = static_cast<char>(tolower(*it));
+    }
     return s;
 }
 
@@ -107,8 +109,9 @@ inline std::string &replace(std::string &s, const std::string &substring, const 
         // Replace the occurence.
         s.replace(pos, substring.size(), substitute);
         // Check how many of them we still need to replace.
-        if ((occurences > 0) && ((--occurences) == 0))
+        if ((occurences > 0) && ((--occurences) == 0)) {
             break;
+        }
         // Advance to the next occurence.
         pos = s.find(substring, pos + substitute.size());
     }
@@ -126,21 +129,19 @@ std::string split_paragraph(std::string s, std::string::size_type width, std::st
 
     while (index < s.length()) {
         index = s.find_last_of(whitespace, index + 1);
-        if (index == std::string::npos)
+        if (index == std::string::npos) {
             break;
-
+        }
         index = s.find_last_not_of(whitespace, index);
-        if (index == std::string::npos)
+        if (index == std::string::npos) {
             break;
-
+        }
         to_trim = s.find_first_not_of(whitespace, index + 1) - index - 1;
-
         s.replace(index + 1, to_trim, "\n");
-
         index_nl = s.find_first_of('\n', index + 1 + to_trim);
-        if (index_nl < (index + width))
+        if (index_nl < (index + width)) {
             index = index_nl;
-
+        }
         index += (width + 1);
     }
     return s;
@@ -188,13 +189,15 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
     std::vector<std::string> result;
     std::string::size_type curr = 0, next = 0;
     while ((next = s.find_first_of(delimiter, curr)) != std::string::npos) {
-        if (next - curr > 0)
+        if (next - curr > 0) {
             result.push_back(s.substr(curr, next - curr));
+        }
         curr = next + 1;
     }
     std::string last(s, curr);
-    if (!last.empty())
+    if (!last.empty()) {
         result.push_back(last);
+    }
     return result;
 }
 

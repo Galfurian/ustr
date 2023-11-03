@@ -5,10 +5,8 @@
 # @update : 03/01/2022
 # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# Set the minimum CMake version, the project name and default build type.
-# -----------------------------------------------------------------------------
-cmake_minimum_required(VERSION 3.1)
+# Set the minimum CMake version.
+cmake_minimum_required(VERSION 2.8...3.22)
 
 # Set the project name.
 project(ustr CXX)
@@ -97,10 +95,8 @@ if(${PROJECT_NAME}_BUILD_EXAMPLES)
         
     # Add the example.
     add_executable(${PROJECT_NAME}_simple ${PROJECT_SOURCE_DIR}/examples/simple.cpp)
-    # Inlcude header directories.
-    target_include_directories(${PROJECT_NAME}_simple PUBLIC ${PROJECT_SOURCE_DIR}/include)
-    # Set compilation flags.
-    target_compile_options(${PROJECT_NAME}_simple PUBLIC ${MUDINT_COMPILE_OPTIONS})
+    # Set the linked libraries.
+    target_link_libraries(${PROJECT_NAME}_simple PUBLIC ${PROJECT_NAME})
 
 endif()
 

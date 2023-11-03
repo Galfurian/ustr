@@ -1,7 +1,8 @@
 
 #include "ustr/utility.hpp"
-#include "ustr/manipulate.hpp"
 #include "ustr/check.hpp"
+#include "ustr/manipulate.hpp"
+
 #include "colors.hpp"
 
 #include <iostream>
@@ -22,7 +23,8 @@ int main(int, char *[])
     std::cout << "'" << ustr::replace(gr, "ratio", "RATIO") << "'\n";
     std::cout << "'" << ustr::replace(gr, "RATIO", "ratio") << "'\n";
     gr = ustr::split_paragraph(gr, 40);
-    std::cout << "'''\n" << gr << "\n'''\n";
+    std::cout << "'''\n"
+              << gr << "\n'''\n";
     gr = ustr::merge_paragraph(gr);
     std::cout << "'" << gr << "'\n";
     std::cout << "'" << ustr::capitalize(" two quantities are in the golden ", 3) << "'\n";
