@@ -23,7 +23,7 @@ namespace details
 inline bool compare_char(char ch0, char ch1, bool sensitive)
 {
     return sensitive ? (ch0 == ch1) : (std::toupper(ch0) == std::toupper(ch1));
-};
+}
 
 /// @brief Compares two characters.
 struct compare_char_t {
@@ -70,7 +70,7 @@ inline bool begin_with(const std::string &s, const std::string &prefix, bool sen
     if (s.empty() || prefix.empty()) {
         return false;
     }
-    typename std::string::const_iterator it0 = s.begin(), it1 = prefix.begin();
+    std::string::const_iterator it0 = s.begin(), it1 = prefix.begin();
     while ((it1 != prefix.end()) && details::compare_char(*it0, *it1, sensitive)) {
         if ((n > 0) && (--n <= 0)) {
             return true;
@@ -98,7 +98,7 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
     if (s.empty() || suffix.empty()) {
         return false;
     }
-    typename std::string::const_reverse_iterator it0 = s.rbegin(), it1 = suffix.rbegin();
+    std::string::const_reverse_iterator it0 = s.rbegin(), it1 = suffix.rbegin();
     while ((it1 != suffix.rend()) && details::compare_char(*it0, *it1, sensitive)) {
         if ((n > 0) && (--n <= 0)) {
             return true;
@@ -159,7 +159,7 @@ inline bool word_is_among(
     bool ends_with,
     bool exact_match)
 {
-    typename std::vector<std::string>::const_iterator it;
+    std::vector<std::string>::const_iterator it;
     for (it = words.begin(); it != words.end(); ++it) {
         if (begins_with && ustr::begin_with(*it, control, sensitive, 0)) {
             return true;
