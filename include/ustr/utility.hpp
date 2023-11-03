@@ -42,6 +42,18 @@ std::string to_string(const T &value)
     return ss.str();
 }
 
+/// @brief Checks if the given string is a number.
+/// @param s the string to check.
+/// @return true if it is a number.
+/// @return false otherwise.
+inline bool is_number(const std::string &s)
+{
+    if (s.empty()) {
+        return false;
+    }
+    return s.find_first_not_of("+-0123456789") == std::string::npos;
+}
+
 /// @brief Transforms the given amount of bytes to a readable string.
 /// @param bytes The bytes to turn to string.
 /// @return String representing the bytes in human readable form.
