@@ -1,4 +1,4 @@
-name: Ubuntu
+name: Documentation
 on:
     push:
         branches-ignore:
@@ -8,12 +8,14 @@ on:
             - ".gitignore"
             - "macos.yml"
             - "windows.yml"
+            - "ubuntu.yml"
     pull_request:
         paths-ignore:
             - "**.md"
             - ".gitignore"
             - "macos.yml"
             - "windows.yml"
+            - "ubuntu.yml"
 jobs:
     doxygen:
         name: Doxygen
