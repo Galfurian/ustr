@@ -161,7 +161,7 @@ if(DOXYGEN_FOUND)
     doxygen_add_docs(
         ${PROJECT_NAME}_documentation
         ${PROJECT_SOURCE_DIR}/include/ustr/check.hpp
-        ${PROJECT_SOURCE_DIR}/include/ustr/manipulation.hpp
+        ${PROJECT_SOURCE_DIR}/include/ustr/manipulate.hpp
         ${PROJECT_SOURCE_DIR}/include/ustr/utility.hpp
         ${PROJECT_SOURCE_DIR}/LICENSE.md
         ${PROJECT_SOURCE_DIR}/README.md

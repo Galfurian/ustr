@@ -1,4 +1,6 @@
 /// @file utility.hpp
+/// @author Enrico Fraccaroli (enry.frak@gmail.com)
+/// @brief List of utility functions.
 
 #pragma once
 

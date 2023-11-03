@@ -1,4 +1,6 @@
 /// @file manipulate.hpp
+/// @author Enrico Fraccaroli (enry.frak@gmail.com)
+/// @brief List of functions to manipulate strings.
 
 #pragma once
 
@@ -201,8 +203,10 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
     return result;
 }
 
+
 /// @brief Compitalize the first letter of the string.
 /// @param s the input string.
+/// @param occurences the number of occurences we need to manipulate.
 /// @return the string with the first letter capitalized.
 std::string capitalize(std::string s, int occurences = 1)
 {
@@ -222,6 +226,7 @@ std::string capitalize(std::string s, int occurences = 1)
 
 /// @brief Restituisce una stringa con la prima lettera minuscola.
 /// @param s La stringa sorgente.
+/// @param occurences the number of occurences we need to manipulate.
 /// @return La stringa con la prima lettera minuscola.
 std::string decapitalize(std::string s, int occurences = 1)
 {
