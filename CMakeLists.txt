@@ -1,12 +1,10 @@
 # -----------------------------------------------------------------------------
 # @brief  : Root cmake file.
 # @author : Enrico Fraccaroli
-# @create : 03/01/2022
-# @update : 03/01/2022
 # -----------------------------------------------------------------------------
 
-# Set the minimum CMake version.
-cmake_minimum_required(VERSION 2.8...3.22)
+# Set the minimum CMake version, the project name and default build type.
+cmake_minimum_required(VERSION 3.1...3.18)
 
 # Set the project name.
 project(ustr CXX)
@@ -35,16 +33,15 @@ mark_as_advanced(FORCE
 # OPTIONS
 # -----------------------------------------------------------------------------
 
-option(${PROJECT_NAME}_STRICT_WARNINGS "Enable strict compiler warnings" ON)
-option(${PROJECT_NAME}_WARNINGS_AS_ERRORS "Treat all warnings as errors" OFF)
-option(${PROJECT_NAME}_BUILD_EXAMPLES "Build examples" OFF)
-option(${PROJECT_NAME}_BUILD_TESTS "Build tests" OFF)
+option(STRICT_WARNINGS "Enable strict compiler warnings" ON)
+option(WARNINGS_AS_ERRORS "Treat all warnings as errors" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_TESTS "Build tests" OFF)
 
 # -----------------------------------------------------------------------------
-# DEPENDENCIES
+# DEPENDENCY (SYSTEM LIBRARIES)
 # -----------------------------------------------------------------------------
 
-# We want doxygen for the documentation.
 find_package(Doxygen)
 
 # -----------------------------------------------------------------------------
@@ -54,7 +51,7 @@ find_package(Doxygen)
 # Add the C++ library.
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-# Inlcude header directories.
+# Include header directories, and link libraries.
 target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR}/include)
 
 # -----------------------------------------------------------------------------
@@ -64,16 +61,16 @@ target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_SOURCE_DIR}/inclu
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     # Disable warnings that suggest using MSVC-specific safe functions
     target_compile_definitions(${PROJECT_NAME} INTERFACE _CRT_SECURE_NO_WARNINGS)
-    if(${PROJECT_NAME}_WARNINGS_AS_ERRORS)
+    if(WARNINGS_AS_ERRORS)
         target_compile_options(${PROJECT_NAME} INTERFACE /WX)
     endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    if(${PROJECT_NAME}_WARNINGS_AS_ERRORS)
+    if(WARNINGS_AS_ERRORS)
         target_compile_options(${PROJECT_NAME} INTERFACE -Werror)
     endif()
 endif()
 
-if(${PROJECT_NAME}_STRICT_WARNINGS)
+if(STRICT_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # Mark system headers as external for MSVC explicitly
         # https://devblogs.microsoft.com/cppblog/broken-warnings-theory
@@ -92,7 +89,7 @@ endif()
 # Examples
 # -----------------------------------------------------------------------------
 
-if(${PROJECT_NAME}_BUILD_EXAMPLES)
+if(BUILD_EXAMPLES)
         
     # Add the example.
     add_executable(${PROJECT_NAME}_simple ${PROJECT_SOURCE_DIR}/examples/simple.cpp)
@@ -105,7 +102,7 @@ endif()
 # TESTS
 # -----------------------------------------------------------------------------
 
-if(${PROJECT_NAME}_BUILD_TESTS)
+if(BUILD_TESTS)
 
     # CMake has support for adding tests to a project.
     enable_testing()
@@ -159,7 +156,7 @@ if(DOXYGEN_FOUND)
         ${doxygenawesome_SOURCE_DIR}/doxygen-awesome-darkmode-toggle.js
     )
     doxygen_add_docs(
-        ${PROJECT_NAME}_documentation
+        documentation
         ${PROJECT_SOURCE_DIR}/include/ustr/check.hpp
         ${PROJECT_SOURCE_DIR}/include/ustr/manipulate.hpp
         ${PROJECT_SOURCE_DIR}/include/ustr/utility.hpp
