@@ -114,6 +114,13 @@ if(BUILD_TESTS)
     # Add the test.
     add_test(${PROJECT_NAME}_test_check_run ${PROJECT_NAME}_test_check)
 
+    # Add the test.
+    add_executable(${PROJECT_NAME}_test_manipulation ${PROJECT_SOURCE_DIR}/tests/test_manipulation.cpp)
+    # Liking for the test.
+    target_link_libraries(${PROJECT_NAME}_test_manipulation ${PROJECT_NAME})
+    # Add the test.
+    add_test(${PROJECT_NAME}_test_manipulation_run ${PROJECT_NAME}_test_manipulation)
+
 endif()
 
 # -----------------------------------------------------------------------------

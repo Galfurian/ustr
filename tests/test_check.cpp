@@ -7,7 +7,7 @@
 
 #define RUN_CHECK(guard)                     \
     if (!(guard)) {                          \
-        std::cout << "Fails : " #guard "\n"; \
+        std::cerr << "Fails : " #guard "\n"; \
         return 1;                            \
     }
 

@@ -19,9 +19,9 @@ int main(int, char *[])
     std::cout << "'" << ustr::calign("Hello", 8) << "'\n";
     std::cout << "'" << ustr::to_lower("Hello") << "'\n";
     std::cout << "'" << ustr::to_upper("Hello") << "'\n";
-    std::cout << "'" << ustr::replace(gr, "ratio", "RATIO", 1) << "'\n";
-    std::cout << "'" << ustr::replace(gr, "ratio", "RATIO") << "'\n";
-    std::cout << "'" << ustr::replace(gr, "RATIO", "ratio") << "'\n";
+    std::cout << "'" << ustr::replace_inplace(gr, "ratio", "RATIO", 1) << "'\n";
+    std::cout << "'" << ustr::replace_inplace(gr, "ratio", "RATIO", 0) << "'\n";
+    std::cout << "'" << ustr::replace_inplace(gr, "RATIO", "ratio", 0) << "'\n";
     gr = ustr::split_paragraph(gr, 40);
     std::cout << "'''\n"
               << gr << "\n'''\n";

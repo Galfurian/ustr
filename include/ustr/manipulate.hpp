@@ -92,17 +92,43 @@ inline std::string lalign(std::string s, std::string::size_type width, char fill
 /// @return the aligned string.
 inline std::string calign(std::string s, std::string::size_type width, char fill = ' ')
 {
-    size_t pad = (width > s.length()) ? (width - s.length()) / 2 : 0;
-    return s.insert(0, pad, fill).append(pad, fill);
+    std::string::size_type len   = s.length();
+    std::string::size_type pad   = (width > len) ? (width - len) / 2 : 0;
+    std::string::size_type extra = (width > len) ? (width - len) % 2 : 0;
+    return s.insert(0, pad, fill).append(pad + extra, fill);
 }
 
 /// @brief Replaces all occurences of the given substring.
 /// @param s the input string.
 /// @param substring the substring that should be replaced.
 /// @param substitute the substitute.
-/// @param occurences how many occurences should we replace (-1 = all of them).
+/// @param occurences how many occurences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string &replace(std::string &s, const std::string &substring, const std::string &substitute, int occurences = -1)
+inline std::string replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences)
+{
+    // Find the first occurence.
+    std::string::size_type pos = s.find(substring);
+    // Iterate until the end of the string.
+    while (pos != std::string::npos) {
+        // Replace the occurence.
+        s.replace(pos, substring.size(), substitute);
+        // Check how many of them we still need to replace.
+        if ((occurences > 0) && ((--occurences) == 0)) {
+            break;
+        }
+        // Advance to the next occurence.
+        pos = s.find(substring, pos + substitute.size());
+    }
+    return s;
+}
+
+/// @brief Replaces all occurences of the given substring.
+/// @param s the input string.
+/// @param substring the substring that should be replaced.
+/// @param substitute the substitute.
+/// @param occurences how many occurences should we replace (0 = all of them).
+/// @return a reference to the modified string.
+inline std::string &replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, unsigned occurences)
 {
     // Find the first occurence.
     std::string::size_type pos = s.find(substring);
@@ -203,21 +229,22 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
     return result;
 }
 
-
 /// @brief Compitalize the first letter of the string.
 /// @param s the input string.
-/// @param occurences the number of occurences we need to manipulate.
+/// @param occurences the number of occurences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, int occurences = 1)
+inline std::string capitalize(std::string s, unsigned occurences)
 {
     if (!s.empty() && (occurences != 0)) {
         // Find the first occurence.
-        for (std::string::size_type i = 0; (i < s.length()) && ((occurences > 0) || (occurences < 0)); ++i) {
+        for (std::string::size_type i = 0; i < s.length(); ++i) {
             // Replace the occurence.
-            if ((i == 0) && isalpha(s[i])) {
-                --occurences, s[i] = static_cast<char>(std::toupper(s[i]));
-            } else if (s[i - 1] == ' ') {
-                --occurences, s[i] = static_cast<char>(std::toupper(s[i]));
+            if (((i == 0) && isalpha(s[i])) || ((i > 0) && (s[i - 1] == ' '))) {
+                s[i] = static_cast<char>(std::toupper(s[i]));
+                // Check how many of them we still need to capitalize.
+                if ((occurences > 0) && ((--occurences) == 0)) {
+                    break;
+                }
             }
         }
     }
@@ -226,18 +253,20 @@ inline std::string capitalize(std::string s, int occurences = 1)
 
 /// @brief Restituisce una stringa con la prima lettera minuscola.
 /// @param s La stringa sorgente.
-/// @param occurences the number of occurences we need to manipulate.
+/// @param occurences the number of occurences we need to manipulate (0 = all of them).
 /// @return La stringa con la prima lettera minuscola.
-inline std::string decapitalize(std::string s, int occurences = 1)
+inline std::string decapitalize(std::string s, unsigned occurences)
 {
     if (!s.empty() && (occurences != 0)) {
         // Find the first occurence.
-        for (std::string::size_type i = 0; (i < s.length()) && ((occurences > 0) || (occurences < 0)); ++i) {
+        for (std::string::size_type i = 0; i < s.length(); ++i) {
             // Replace the occurence.
-            if ((i == 0) && isalpha(s[i])) {
-                --occurences, s[i] = static_cast<char>(std::tolower(s[i]));
-            } else if (s[i - 1] == ' ') {
-                --occurences, s[i] = static_cast<char>(std::tolower(s[i]));
+            if (((i == 0) && isalpha(s[i])) || ((i > 0) && (s[i - 1] == ' '))) {
+                s[i] = static_cast<char>(std::tolower(s[i]));
+                // Check how many of them we still need to capitalize.
+                if ((occurences > 0) && ((--occurences) == 0)) {
+                    break;
+                }
             }
         }
     }

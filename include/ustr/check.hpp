@@ -56,7 +56,7 @@ private:
 /// @param s source string.
 /// @param prefix the prefix to check.
 /// @param sensitive enables case-sensitive check.
-/// @param n the number of characters to check (0 = all).
+/// @param n the number of characters to check (0 = all of prefix).
 /// @return true if the string beings with the given prefix.
 /// @return false otherwise.
 inline bool begin_with(const std::string &s, const std::string &prefix, bool sensitive, unsigned n)
@@ -84,7 +84,7 @@ inline bool begin_with(const std::string &s, const std::string &prefix, bool sen
 /// @param s source string.
 /// @param suffix the suffix to check.
 /// @param sensitive enables case-sensitive check.
-/// @param n the number of characters to check (0 = all).
+/// @param n the number of characters to check (0 = all of suffix).
 /// @return true if the string ends with the given suffix.
 /// @return false otherwise.
 inline bool end_with(const std::string &s, const std::string &suffix, bool sensitive, unsigned n)
