@@ -20,7 +20,7 @@ namespace details
 /// @param sensitive enables case-sensitive check.
 /// @return true if the characters are equal.
 /// @return false otherwise.
-inline bool compare_char(char ch0, char ch1, bool sensitive)
+inline bool compare_char(char ch0, char ch1, bool sensitive = false)
 {
     return sensitive ? (ch0 == ch1) : (std::toupper(ch0) == std::toupper(ch1));
 }
@@ -59,7 +59,7 @@ private:
 /// @param n the number of characters to check (0 = all of prefix).
 /// @return true if the string beings with the given prefix.
 /// @return false otherwise.
-inline bool begin_with(const std::string &s, const std::string &prefix, bool sensitive, unsigned n)
+inline bool begin_with(const std::string &s, const std::string &prefix, bool sensitive = false, unsigned n = 0)
 {
     if (&prefix == &s) {
         return true;
@@ -87,7 +87,7 @@ inline bool begin_with(const std::string &s, const std::string &prefix, bool sen
 /// @param n the number of characters to check (0 = all of suffix).
 /// @return true if the string ends with the given suffix.
 /// @return false otherwise.
-inline bool end_with(const std::string &s, const std::string &suffix, bool sensitive, unsigned n)
+inline bool end_with(const std::string &s, const std::string &suffix, bool sensitive = false, unsigned n = 0)
 {
     if (&suffix == &s) {
         return true;
@@ -114,7 +114,7 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
 /// @param sensitive enables case-sensitive check.
 /// @param min_length the minimum number of characters for the prefix.
 /// @return true if the prefix is an approved abbreviation of s, false otherwise.
-inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive, std::size_t min_length)
+inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive = false, std::size_t min_length = 1)
 {
     if (&prefix == &s) {
         return true;
@@ -142,7 +142,7 @@ inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, 
 /// @param n the number of characters to compare (0 = all).
 /// @return true if the strings are equal, based on the given configuration.
 /// @return false otherwise.
-inline bool compare(const std::string &s0, const std::string &s1, bool sensitive, unsigned n)
+inline bool compare(const std::string &s0, const std::string &s1, bool sensitive = false, unsigned n = 0)
 {
     std::string::const_iterator it0 = s0.begin(), it1 = s1.begin();
     while ((it0 != s0.end()) && (it1 != s1.end()) && details::compare_char(*it0, *it1, sensitive)) {
@@ -159,7 +159,7 @@ inline bool compare(const std::string &s0, const std::string &s1, bool sensitive
 /// @param sub_s the substring to count.
 /// @param sensitive enables case-sensitive check.
 /// @return the number of occurences.
-inline std::size_t count(const std::string &s, const std::string &sub_s, bool sensitive)
+inline std::size_t count(const std::string &s, const std::string &sub_s, bool sensitive = false)
 {
     std::size_t occurrences          = 0;
     std::string::difference_type pos = 0, length = static_cast<std::string::difference_type>(sub_s.length());
