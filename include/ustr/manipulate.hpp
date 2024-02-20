@@ -233,7 +233,7 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 /// @param s the input string.
 /// @param occurences the number of occurences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, unsigned occurences = 0)
+inline std::string capitalize(std::string s, unsigned occurences = 1)
 {
     if (!s.empty() && (occurences != 0)) {
         // Find the first occurence.

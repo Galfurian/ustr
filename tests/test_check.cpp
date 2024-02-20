@@ -35,5 +35,6 @@ int main(int, char *[])
     RUN_CHECK(ustr::is_abbreviation_of("ma", "magic", true, 3) == false)
     RUN_CHECK(ustr::is_abbreviation_of("MAG", "magic", true, 3) == false)
     RUN_CHECK(ustr::is_abbreviation_of("MAG", "magic", false, 3) == true)
+    RUN_CHECK(ustr::compare("str", "stat") == false)
     return 0;
 }
