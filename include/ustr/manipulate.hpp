@@ -149,8 +149,18 @@ inline std::string &replace_inplace(std::string &s, const std::string &substring
 /// @brief Strips the given character from the string.
 /// @param s the input string.
 /// @param c the character to remove.
+/// @return the modified string.
+inline std::string strip(std::string s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    return s;
+}
+
+/// @brief Strips the given character from the string.
+/// @param s the input string.
+/// @param c the character to remove.
 /// @return a reference to the modified string.
-inline std::string &strip(std::string &s, char c)
+inline std::string &strip_inplace(std::string &s, char c)
 {
     s.erase(std::remove(s.begin(), s.end(), c), s.end());
     return s;
