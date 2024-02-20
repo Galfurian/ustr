@@ -108,6 +108,33 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
     return it1 == suffix.rend();
 }
 
+/// @brief Checks if prefix is an abbreviation of s.
+/// @param prefix the prefix to check.
+/// @param s source string.
+/// @param sensitive enables case-sensitive check.
+/// @param min_length the minimum number of characters for the prefix.
+/// @return true if the prefix is an approved abbreviation of s, false otherwise.
+inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive, unsigned min_length)
+{
+    if (&prefix == &s) {
+        return true;
+    }
+    if (prefix.length() > s.length()) {
+        return false;
+    }
+    if (prefix.length() < min_length) {
+        return false;
+    }
+    if (s.empty() || prefix.empty()) {
+        return false;
+    }
+    std::string::const_iterator it0 = s.begin(), it1 = prefix.begin();
+    while ((it1 != prefix.end()) && details::compare_char(*it0, *it1, sensitive)) {
+        ++it0, ++it1;
+    }
+    return it1 == prefix.end();
+}
+
 /// @brief Compares the two strings.
 /// @param s0 the first string.
 /// @param s1 the second string.
