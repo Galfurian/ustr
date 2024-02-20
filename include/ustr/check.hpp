@@ -114,7 +114,7 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
 /// @param sensitive enables case-sensitive check.
 /// @param min_length the minimum number of characters for the prefix.
 /// @return true if the prefix is an approved abbreviation of s, false otherwise.
-inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive, unsigned min_length)
+inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive, std::size_t min_length)
 {
     if (&prefix == &s) {
         return true;
