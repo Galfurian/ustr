@@ -79,12 +79,12 @@ inline const char *to_human_size(unsigned long bytes)
 /// @return String representing the binary value.
 inline const char *decimal_to_binary_string(unsigned long value, unsigned length)
 {
-    static char buffer[33];
-    for (unsigned i = 0; i < 33; ++i) {
+    static char buffer[65];
+    for (unsigned i = 0; i < 65; ++i) {
         buffer[i] = 0;
     }
-    for (unsigned i = 0, j = 32 - std::min(length, 32U); j < 32; ++i, ++j) {
-        buffer[i] = (value & (1U << (31U - j))) ? '1' : '0';
+    for (unsigned i = 0, j = 32 - std::min(length, 64U); j < 64; ++i, ++j) {
+        buffer[i] = (value & (1U << (63U - j))) ? '1' : '0';
     }
     return buffer;
 }
