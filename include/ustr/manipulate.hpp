@@ -146,6 +146,16 @@ inline std::string &replace_inplace(std::string &s, const std::string &substring
     return s;
 }
 
+/// @brief Strips the given character from the string.
+/// @param s the input string.
+/// @param c the character to remove.
+/// @return a reference to the modified string.
+inline std::string &strip(std::string &s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    return s;
+}
+
 /// @brief Transforms a single-line string a paragraph formatted string.
 /// @param s the input string.
 /// @param width the width of the paragraphs.
