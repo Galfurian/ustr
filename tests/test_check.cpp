@@ -29,5 +29,11 @@ int main(int, char *[])
     RUN_CHECK(ustr::count("Cat, Dog, Cat, Cat", "DOG", false) != 0)
     RUN_CHECK(ustr::count("Cat, Dog, cat, Cat", "Cat", true) != 2)
     RUN_CHECK(ustr::count("Cat, Dog, DOG, Cat", "DOG", true) != 1)
+    RUN_CHECK(ustr::is_abbreviation_of("mag", "magic", true, 3) == true)
+    RUN_CHECK(ustr::is_abbreviation_of("mag", "magic", true, 3) == true)
+    RUN_CHECK(ustr::is_abbreviation_of("magi", "magic", true, 3) == true)
+    RUN_CHECK(ustr::is_abbreviation_of("ma", "magic", true, 3) == false)
+    RUN_CHECK(ustr::is_abbreviation_of("MAG", "magic", true, 3) == false)
+    RUN_CHECK(ustr::is_abbreviation_of("MAG", "magic", false, 3) == true)
     return 0;
 }

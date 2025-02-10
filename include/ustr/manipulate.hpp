@@ -104,7 +104,7 @@ inline std::string calign(std::string s, std::string::size_type width, char fill
 /// @param substitute the substitute.
 /// @param occurences how many occurences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences)
+inline std::string replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences = 0)
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
@@ -245,7 +245,7 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 /// @param s the input string.
 /// @param occurences the number of occurrences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, unsigned occurences)
+inline std::string capitalize(std::string s, unsigned occurences = 0)
 {
     // Early exit if the string is empty.
     if (s.empty()) {
@@ -273,7 +273,7 @@ inline std::string capitalize(std::string s, unsigned occurences)
 /// @param s La stringa sorgente.
 /// @param occurences Il numero di occorrenze da modificare (0 = tutte).
 /// @return La stringa con la prima lettera minuscola.
-inline std::string decapitalize(std::string s, unsigned occurences)
+inline std::string decapitalize(std::string s, unsigned occurences = 0)
 {
     // Early exit if the string is empty.
     if (s.empty()) {
