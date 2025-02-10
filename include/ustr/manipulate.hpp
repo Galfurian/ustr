@@ -15,113 +15,114 @@ namespace ustr
 {
 
 /// @brief Removes the specified characters from both the beginning and the end of the string.
-/// @param s the input string.
+/// @param str the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string trim(const std::string &s, const std::string &padchar = " ")
+inline auto trim(const std::string &str, const std::string &padchar = " ") -> std::string
 {
-    std::string::size_type left  = s.find_first_not_of(padchar);
-    std::string::size_type right = s.find_last_not_of(padchar);
-    return (left != std::string::npos) ? s.substr(left, right - left + 1) : "";
+    std::string::size_type left  = str.find_first_not_of(padchar);
+    std::string::size_type right = str.find_last_not_of(padchar);
+    return (left != std::string::npos) ? str.substr(left, right - left + 1) : "";
 }
 
 /// @brief Removes the specified characters from the beginning of the string.
-/// @param s the input string.
+/// @param str the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string ltrim(const std::string &s, const std::string &padchar = " ")
+inline auto ltrim(const std::string &str, const std::string &padchar = " ") -> std::string
 {
-    std::string::size_type left = s.find_first_not_of(padchar);
-    return (left != std::string::npos) ? s.substr(left) : "";
+    std::string::size_type left = str.find_first_not_of(padchar);
+    return (left != std::string::npos) ? str.substr(left) : "";
 }
 
 /// @brief Removes the specified characters from the end of the string.
-/// @param s the input string.
+/// @param str the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string rtrim(const std::string &s, const std::string &padchar = " ")
+inline auto rtrim(const std::string &str, const std::string &padchar = " ") -> std::string
 {
-    std::string::size_type right = s.find_last_not_of(padchar);
-    return (right != std::string::npos) ? s.substr(0, right + 1) : "";
+    std::string::size_type right = str.find_last_not_of(padchar);
+    return (right != std::string::npos) ? str.substr(0, right + 1) : "";
 }
 
 /// @brief Converts the string to all uper-case.
-/// @param s the input string.
+/// @param str the input string.
 /// @return the new string.
-inline std::string to_upper(std::string s)
+inline auto to_upper(std::string str) -> std::string
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
-        *it = static_cast<char>(toupper(*it));
+    for (char &chr : str) {
+        chr = static_cast<char>(toupper(chr));
     }
-    return s;
+    return str;
 }
 
 /// @brief Converts the string to all lower-case.
-/// @param s the input string.
+/// @param str the input string.
 /// @return the new string.
-inline std::string to_lower(std::string s)
+inline auto to_lower(std::string str) -> std::string
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
-        *it = static_cast<char>(tolower(*it));
+    for (char &chr : str) {
+        chr = static_cast<char>(tolower(chr));
     }
-    return s;
+    return str;
 }
 
 /// @brief Aligns the string to the right.
-/// @param s the input string.
+/// @param str the input string.
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string ralign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto ralign(std::string str, std::string::size_type width, char fill = ' ') -> std::string
 {
-    std::string::size_type pad = (width > s.length()) ? (width - s.length()) : 0;
-    return s.insert(0, pad, fill);
+    std::string::size_type pad = (width > str.length()) ? (width - str.length()) : 0;
+    return str.insert(0, pad, fill);
 }
 
 /// @brief Aligns the string to the left.
-/// @param s the input string.
+/// @param str the input string.
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string lalign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto lalign(std::string str, std::string::size_type width, char fill = ' ') -> std::string
 {
-    std::string::size_type pad = (width > s.length()) ? (width - s.length()) : 0;
-    return s.append(pad, fill);
+    std::string::size_type pad = (width > str.length()) ? (width - str.length()) : 0;
+    return str.append(pad, fill);
 }
 
 /// @brief Center aligns the string.
-/// @param s the input string.
+/// @param str the input string.
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string calign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto calign(std::string str, std::string::size_type width, char fill = ' ') -> std::string
 {
-    std::string::size_type len   = s.length();
+    std::string::size_type len   = str.length();
     std::string::size_type pad   = (width > len) ? (width - len) / 2 : 0;
     std::string::size_type extra = (width > len) ? (width - len) % 2 : 0;
-    return s.insert(0, pad, fill).append(pad + extra, fill);
+    return str.insert(0, pad, fill).append(pad + extra, fill);
 }
 
-/// @brief Replaces all occurences of the given substring.
-/// @param s the input string.
+/// @brief Replaces all count of the given substring.
+/// @param str the input string.
 /// @param substring the substring that should be replaced.
 /// @param substitute the substitute.
-/// @param occurences how many occurences should we replace (0 = all of them).
+/// @param count how many count should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences = 0)
+inline auto replace(std::string str, const std::string &substring, const std::string &substitute, std::size_t count = 0)
+    -> std::string
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
-        return s;
+        return str;
     }
 
     std::string::size_type pos = 0;
 
     // If 0, replace all occurrences.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? str.length() : count;
 
-    while ((pos = s.find(substring, pos)) != std::string::npos && count > 0) {
-        s.replace(pos, substring.size(), substitute);
+    while ((pos = str.find(substring, pos)) != std::string::npos && count > 0) {
+        str.replace(pos, substring.size(), substitute);
         // Move past the substituted part.
         pos += substitute.size();
         // Stop once we've replaced the required number of occurrences.
@@ -130,29 +131,31 @@ inline std::string replace(std::string s, const std::string &substring, const st
         }
     }
 
-    return s;
+    return str;
 }
 
 /// @brief Replaces all occurrences of the given substring.
-/// @param s the input string.
+/// @param str the input string.
 /// @param substring the substring that should be replaced.
 /// @param substitute the substitute.
-/// @param occurences how many occurrences should we replace (0 = all of them).
+/// @param count how many occurrences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string &replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, unsigned occurences)
+inline auto
+replace_inplace(std::string &str, const std::string &substring, const std::string &substitute, std::size_t count = 0)
+    -> std::string &
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
-        return s;
+        return str;
     }
 
     std::string::size_type pos = 0;
 
     // If 0, replace all occurrences.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? str.length() : count;
 
-    while ((pos = s.find(substring, pos)) != std::string::npos && count > 0) {
-        s.replace(pos, substring.size(), substitute);
+    while ((pos = str.find(substring, pos)) != std::string::npos && count > 0) {
+        str.replace(pos, substring.size(), substitute);
         // Move past the substituted part.
         pos += substitute.size();
         // Stop once we've replaced the required number of occurrences.
@@ -161,104 +164,113 @@ inline std::string &replace_inplace(std::string &s, const std::string &substring
         }
     }
 
-    return s;
+    return str;
 }
 
 /// @brief Strips the given character from the string.
-/// @param s the input string.
-/// @param c the character to remove.
+/// @param str the input string.
+/// @param chr the character to remove.
 /// @return the modified string.
-inline std::string strip(std::string s, char c)
+inline auto strip(std::string str, char chr) -> std::string
 {
-    s.erase(std::remove(s.begin(), s.end(), c), s.end());
-    return s;
+    // Remove all occurrences of the character 'chr' in the string
+    str.erase(std::remove(str.begin(), str.end(), chr), str.end());
+    return str;
 }
 
 /// @brief Strips the given character from the string.
-/// @param s the input string.
-/// @param c the character to remove.
+/// @param str the input string.
+/// @param chr the character to remove.
 /// @return a reference to the modified string.
-inline std::string &strip_inplace(std::string &s, char c)
+inline auto strip_inplace(std::string &str, char chr) -> std::string &
 {
-    s.erase(std::remove(s.begin(), s.end(), c), s.end());
-    return s;
+    // Remove all occurrences of the character 'chr' in the string
+    str.erase(std::remove(str.begin(), str.end(), chr), str.end());
+    return str;
 }
 
 /// @brief Transforms a single-line string a paragraph formatted string.
-/// @param s the input string.
+/// @param str the input string.
 /// @param width the width of the paragraphs.
 /// @param whitespace the filler character.
 /// @return the string splitted into paragraphs.
-inline std::string split_paragraph(std::string s, std::string::size_type width, std::string whitespace = " \t\r")
+inline auto split_paragraph(std::string str, std::string::size_type width, const std::string &whitespace = " \t\r")
+    -> std::string
 {
-    std::string::size_type index = width - 1, index_nl = width - 1, to_trim;
+    std::string::size_type index    = width - 1;
+    std::string::size_type index_nl = 0;
+    std::string::size_type to_trim  = 0;
 
-    while (index < s.length()) {
-        index = s.find_last_of(whitespace, index + 1);
+    while (index < str.length()) {
+        index = str.find_last_of(whitespace, index + 1);
         if (index == std::string::npos) {
             break;
         }
-        index = s.find_last_not_of(whitespace, index);
+        index = str.find_last_not_of(whitespace, index);
         if (index == std::string::npos) {
             break;
         }
-        to_trim = s.find_first_not_of(whitespace, index + 1) - index - 1;
-        s.replace(index + 1, to_trim, "\n");
-        index_nl = s.find_first_of('\n', index + 1 + to_trim);
+        to_trim = str.find_first_not_of(whitespace, index + 1) - index - 1;
+        str.replace(index + 1, to_trim, "\n");
+        index_nl = str.find_first_of('\n', index + 1 + to_trim);
         if (index_nl < (index + width)) {
             index = index_nl;
         }
         index += (width + 1);
     }
-    return s;
+    return str;
 }
 
 /// @brief Transforms a paragraph formatted string into a single line.
-/// @param s the string to manipulate.
+/// @param str the string to manipulate.
 /// @return the single line.
-inline std::string merge_paragraph(std::string s)
+inline auto merge_paragraph(std::string str) -> std::string
 {
-    for (std::string::size_type i = 1, j = 1; i < s.length(); ++i) {
-        if (s[i] == ' ') {
+    for (std::string::size_type i = 1, j = 1; i < str.length(); ++i) {
+        if (str[i] == ' ') {
             // Remove multiple spaces.
             // Go searching for the last ' ' of a series of ' '.
-            for (j = i + 1; (j < s.length()) && (s[j] == ' '); ++j);
+            for (j = i + 1; (j < str.length()) && (str[j] == ' '); ++j) {
+                ;
+            }
             // Compute the amount of characters to remove.
             std::string::size_type to_remove = (j - i) - 1;
             // Remove the excess spaces.
-            s.erase(i, to_remove);
-        } else if (s[i] == '\n') {
+            str.erase(i, to_remove);
+        } else if (str[i] == '\n') {
             // Remove newlines and compress more than two newlines.
             // Go searching for the last '\n' of a series of '\n'.
-            for (j = i + 1; (j < s.length()) && (s[j] == '\n'); ++j);
+            for (j = i + 1; (j < str.length()) && (str[j] == '\n'); ++j) {
+            }
             // Compute the amount of characters to remove. Take advantage of bool,
             //  because if we have more than 1 '\n' it means that we need to remove
             //  all of them except one.
-            std::string::size_type to_remove = (j - i) - (j - i > 1);
+            std::string::size_type to_remove = (j - i) - static_cast<std::string::size_type>(j - i > 1);
             // Remove the excess newlines.
-            s.replace(i, to_remove, " ");
+            str.replace(i, to_remove, " ");
             // Move after the eventual Wanted new-line.
-            i += (j - i > 1);
+            i += static_cast<std::string::size_type>(j - i > 1);
         }
     }
-    return s;
+    return str;
 }
 
 /// @brief Given a string and a delimiter, the string is splitted by using the delimiter.
-/// @param s the input string.
+/// @param str the input string.
 /// @param delimiter the delimiter which has to be used.
 /// @return the splitted string.
-inline std::vector<std::string> split(std::string const &s, std::string const &delimiter)
+inline auto split(std::string const &str, std::string const &delimiter) -> std::vector<std::string>
 {
     std::vector<std::string> result;
-    std::string::size_type curr = 0, next = 0;
-    while ((next = s.find_first_of(delimiter, curr)) != std::string::npos) {
+    std::string::size_type curr = 0;
+    std::string::size_type next = 0;
+    while ((next = str.find_first_of(delimiter, curr)) != std::string::npos) {
         if (next - curr > 0) {
-            result.push_back(s.substr(curr, next - curr));
+            result.push_back(str.substr(curr, next - curr));
         }
         curr = next + 1;
     }
-    std::string last(s, curr);
+    std::string last(str, curr);
     if (!last.empty()) {
         result.push_back(last);
     }
@@ -266,59 +278,59 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 }
 
 /// @brief Capitalize the first letter of the string.
-/// @param s the input string.
-/// @param occurences the number of occurrences we need to manipulate (0 = all of them).
+/// @param str the input string.
+/// @param count the number of occurrences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, unsigned occurences = 1)
+inline auto capitalize(std::string str, std::size_t count = 0) -> std::string
 {
     // Early exit if the string is empty.
-    if (s.empty()) {
-        return s;
+    if (str.empty()) {
+        return str;
     }
 
     // If 0, capitalize all.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? str.length() : count;
 
-    for (std::string::size_type i = 0; i < s.length() && count > 0; ++i) {
-        if ((i == 0 && isalpha(s[i])) || (i > 0 && s[i - 1] == ' ')) {
+    for (std::string::size_type pos = 0; pos < str.length() && count > 0; ++pos) {
+        if ((pos == 0 && (isalpha(str[pos]) != 0)) || (pos > 0 && str[pos - 1] == ' ')) {
             // Capitalize the character.
-            s[i] = static_cast<char>(std::toupper(s[i]));
+            str[pos] = static_cast<char>(std::toupper(str[pos]));
             // Stop once we reach the required number of occurrences.
-            if (--count == 0 && occurences != 0) {
+            if (--count == 0) {
                 break;
             }
         }
     }
 
-    return s;
+    return str;
 }
 
 /// @brief Restituisce una stringa con la prima lettera minuscola.
-/// @param s La stringa sorgente.
-/// @param occurences Il numero di occorrenze da modificare (0 = tutte).
+/// @param str La stringa sorgente.
+/// @param count Il numero di occorrenze da modificare (0 = tutte).
 /// @return La stringa con la prima lettera minuscola.
-inline std::string decapitalize(std::string s, unsigned occurences = 0)
+inline auto decapitalize(std::string str, std::size_t count = 0) -> std::string
 {
     // Early exit if the string is empty.
-    if (s.empty()) {
-        return s;
+    if (str.empty()) {
+        return str;
     }
 
     // If 0, decapitalize all.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? str.length() : count;
 
-    for (std::string::size_type i = 0; i < s.length() && count > 0; ++i) {
-        if ((i == 0 && isalpha(s[i])) || (i > 0 && s[i - 1] == ' ')) {
+    for (std::string::size_type pos = 0; pos < str.length() && count > 0; ++pos) {
+        if ((pos == 0 && (isalpha(str[pos]) != 0)) || (pos > 0 && str[pos - 1] == ' ')) {
             // Decapitalize the character.
-            s[i] = static_cast<char>(std::tolower(s[i]));
+            str[pos] = static_cast<char>(std::tolower(str[pos]));
             // Stop once we reach the required number of occurrences.
-            if (--count == 0 && occurences != 0) {
+            if (--count == 0) {
                 break;
             }
         }
     }
 
-    return s;
+    return str;
 }
 
 } // namespace ustr

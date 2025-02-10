@@ -21,6 +21,7 @@ endif()
 
 option(STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(WARNINGS_AS_ERRORS "Treat all warnings as errors" OFF)
+
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_TESTS "Build tests" ON)
 
@@ -43,6 +44,8 @@ mark_as_advanced(FORCE
 # -----------------------------------------------------------------------------
 
 find_package(Doxygen)
+
+find_program(CLANG_TIDY_EXE NAMES clang-tidy)
 
 # -----------------------------------------------------------------------------
 # LIBRARY
@@ -130,18 +133,11 @@ endif()
 if(BUILD_TESTS)
     # CMake has support for adding tests to a project.
     enable_testing()
-    # Add the test.
-    add_executable(${PROJECT_NAME}_test_check ${PROJECT_SOURCE_DIR}/tests/test_check.cpp)
-    # Liking for the test.
-    target_link_libraries(${PROJECT_NAME}_test_check ${PROJECT_NAME})
-    # Add the test.
-    add_test(${PROJECT_NAME}_test_check_run ${PROJECT_NAME}_test_check)
-    # Add the test.
-    add_executable(${PROJECT_NAME}_test_manipulation ${PROJECT_SOURCE_DIR}/tests/test_manipulation.cpp)
-    # Liking for the test.
-    target_link_libraries(${PROJECT_NAME}_test_manipulation ${PROJECT_NAME})
-    # Add the test.
-    add_test(${PROJECT_NAME}_test_manipulation_run ${PROJECT_NAME}_test_manipulation)
+
+    add_executable(${PROJECT_NAME}_test_all ${PROJECT_SOURCE_DIR}/tests/test_all.cpp)
+    target_link_libraries(${PROJECT_NAME}_test_all ${PROJECT_NAME})
+    add_test(${PROJECT_NAME}_test_all_run ${PROJECT_NAME}_test_all)
+
 endif()
 
 # -----------------------------------------------------------------------------
@@ -164,7 +160,7 @@ if(CLANG_TIDY_EXE)
         "${PROJECT_SOURCE_DIR}/src/*.c"
     )
     add_custom_target(
-        json_clang_tidy
+        ${PROJECT_NAME}_clang_tidy
         COMMAND ${CLANG_TIDY_EXE}
         --p=${CMAKE_BINARY_DIR}
         ${ALL_PROJECT_FILES}
@@ -172,7 +168,7 @@ if(CLANG_TIDY_EXE)
         VERBATIM
     )
     add_custom_target(
-        json_clang_tidy_fix
+        ${PROJECT_NAME}_clang_tidy_fix
         COMMAND ${CLANG_TIDY_EXE}
         --fix
         --p=${CMAKE_BINARY_DIR}
