@@ -1,9 +1,13 @@
+/// @file simple.cpp
+/// @author Enrico Fraccaroli (enry.frak@gmail.com)
+/// @brief A simple example.
+/// @copyright
+/// Copyright (c) 2024-2025. All rights reserved.
+/// Licensed under the MIT License. See LICENSE file in the project root for details.
 
 #include "ustr/check.hpp"
 #include "ustr/manipulate.hpp"
 #include "ustr/utility.hpp"
-
-#include "colors.hpp"
 
 #include <iostream>
 

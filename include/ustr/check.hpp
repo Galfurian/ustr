@@ -54,29 +54,29 @@ private:
 } // namespace details
 
 /// @brief Checks if the source string begins with a given string.
-/// @param s source string.
+/// @param str source string.
 /// @param prefix the prefix to check.
 /// @param sensitive enables case-sensitive check.
 /// @param count the number of characters to check (0 = all of prefix).
 /// @return true if the string beings with the given prefix.
 /// @return false otherwise.
-inline auto begin_with(const std::string &s, const std::string &prefix, bool sensitive = false, std::size_t count = 0)
+inline auto begin_with(const std::string &str, const std::string &prefix, bool sensitive = false, std::size_t count = 0)
     -> bool
 {
-    if (&prefix == &s) {
+    if (&prefix == &str) {
         return true;
     }
-    if (prefix.length() > s.length()) {
+    if (prefix.length() > str.length()) {
         return false;
     }
-    if (s.empty() || prefix.empty()) {
+    if (str.empty() || prefix.empty()) {
         return false;
     }
 
     // If 0, check all.
-    count = (count == 0) ? s.length() : count;
+    count = (count == 0) ? str.length() : count;
 
-    std::string::const_iterator it0 = s.begin();
+    std::string::const_iterator it0 = str.begin();
     std::string::const_iterator it1 = prefix.begin();
     while ((it1 != prefix.end()) && details::compare_char(*it0, *it1, sensitive)) {
         if (--count == 0) {
@@ -88,29 +88,29 @@ inline auto begin_with(const std::string &s, const std::string &prefix, bool sen
 }
 
 /// @brief Check if the source string end with a given string.
-/// @param s source string.
+/// @param str source string.
 /// @param suffix the suffix to check.
 /// @param sensitive enables case-sensitive check.
 /// @param count the number of characters to check (0 = all of suffix).
 /// @return true if the string ends with the given suffix.
 /// @return false otherwise.
-inline auto end_with(const std::string &s, const std::string &suffix, bool sensitive = false, std::size_t count = 0)
+inline auto end_with(const std::string &str, const std::string &suffix, bool sensitive = false, std::size_t count = 0)
     -> bool
 {
-    if (&suffix == &s) {
+    if (&suffix == &str) {
         return true;
     }
-    if (suffix.length() > s.length()) {
+    if (suffix.length() > str.length()) {
         return false;
     }
-    if (s.empty() || suffix.empty()) {
+    if (str.empty() || suffix.empty()) {
         return false;
     }
 
     // If 0, check all.
-    count = (count == 0) ? s.length() : count;
+    count = (count == 0) ? str.length() : count;
 
-    std::string::const_reverse_iterator it0 = s.rbegin();
+    std::string::const_reverse_iterator it0 = str.rbegin();
     std::string::const_reverse_iterator it1 = suffix.rbegin();
     while ((it1 != suffix.rend()) && details::compare_char(*it0, *it1, sensitive)) {
         if (--count == 0) {
@@ -121,29 +121,31 @@ inline auto end_with(const std::string &s, const std::string &suffix, bool sensi
     return it1 == suffix.rend();
 }
 
-/// @brief Checks if prefix is an abbreviation of s.
+/// @brief Checks if prefix is an abbreviation of str.
 /// @param prefix the prefix to check.
-/// @param s source string.
+/// @param str source string.
 /// @param sensitive enables case-sensitive check.
 /// @param min_length the minimum number of characters for the prefix.
-/// @return true if the prefix is an approved abbreviation of s, false otherwise.
-inline auto
-is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive = false, std::size_t min_length = 1)
-    -> bool
+/// @return true if the prefix is an approved abbreviation of str, false otherwise.
+inline auto is_abbreviation_of(
+    const std::string &prefix,
+    const std::string &str,
+    bool sensitive         = false,
+    std::size_t min_length = 1) -> bool
 {
-    if (&prefix == &s) {
+    if (&prefix == &str) {
         return true;
     }
-    if (prefix.length() > s.length()) {
+    if (prefix.length() > str.length()) {
         return false;
     }
     if (prefix.length() < min_length) {
         return false;
     }
-    if (s.empty() || prefix.empty()) {
+    if (str.empty() || prefix.empty()) {
         return false;
     }
-    std::string::const_iterator it0 = s.begin();
+    std::string::const_iterator it0 = str.begin();
     std::string::const_iterator it1 = prefix.begin();
     while ((it1 != prefix.end()) && details::compare_char(*it0, *it1, sensitive)) {
         ++it0, ++it1;
@@ -152,26 +154,27 @@ is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensiti
 }
 
 /// @brief Compares the two strings.
-/// @param s0 the first string.
-/// @param s1 the second string.
+/// @param str0 the first string.
+/// @param str1 the second string.
 /// @param sensitive enables case-sensitive check.
 /// @param count the number of characters to compare (0 = all).
 /// @return true if the strings are equal, based on the given configuration.
 /// @return false otherwise.
-inline auto compare(const std::string &s0, const std::string &s1, bool sensitive = false, std::size_t count = 0) -> bool
+inline auto compare(const std::string &str0, const std::string &str1, bool sensitive = false, std::size_t count = 0)
+    -> bool
 {
     // If 0, check all.
-    count = (count == 0) ? std::max(s0.length(), s1.length()) : count;
+    count = (count == 0) ? std::max(str0.length(), str1.length()) : count;
 
-    std::string::const_iterator it0 = s0.begin();
-    std::string::const_iterator it1 = s1.begin();
-    while ((it0 != s0.end()) && (it1 != s1.end()) && details::compare_char(*it0, *it1, sensitive)) {
+    std::string::const_iterator it0 = str0.begin();
+    std::string::const_iterator it1 = str1.begin();
+    while ((it0 != str0.end()) && (it1 != str1.end()) && details::compare_char(*it0, *it1, sensitive)) {
         if (--count == 0) {
             return true;
         }
         ++it0, ++it1;
     }
-    return (it0 == s0.end()) && (it1 == s1.end());
+    return (it0 == str0.end()) && (it1 == str1.end());
 }
 
 /// @brief Counts the occurences of the substring inside the given string.
