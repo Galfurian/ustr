@@ -1,14 +1,14 @@
 
-#include "ustr/utility.hpp"
 #include "ustr/check.hpp"
 #include "ustr/manipulate.hpp"
+#include "ustr/utility.hpp"
 
 #include <iostream>
 
-#define RUN_CHECK(input, output)                                                        \
-    if ((input) != (output)) {                                                          \
-        std::cerr << "FAIL (" #input ") `" << (input) << "` != `" << (output) << "`\n"; \
-        return 1;                                                                       \
+#define RUN_CHECK(input, output)                                                                                       \
+    if ((input) != (output)) {                                                                                         \
+        std::cerr << "FAIL (" #input ") `" << (input) << "` != `" << (output) << "`\n";                                \
+        return 1;                                                                                                      \
     }
 
 int main(int, char *[])

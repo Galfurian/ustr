@@ -1,7 +1,7 @@
 
-#include "ustr/utility.hpp"
 #include "ustr/check.hpp"
 #include "ustr/manipulate.hpp"
+#include "ustr/utility.hpp"
 
 #include "colors.hpp"
 
@@ -9,7 +9,8 @@
 
 int main(int, char *[])
 {
-    std::string gr = "Two quantities are in the golden ratio if their ratio is the same as the ratio of their sum to the larger of the two quantities.";
+    std::string gr = "Two quantities are in the golden ratio if their ratio is the same as the ratio of their sum to "
+                     "the larger of the two quantities.";
 
     std::cout << "'" << ustr::trim(" Hello world!  ") << "'\n";
     std::cout << "'" << ustr::ltrim(" Hello world!  ") << "'\n";
@@ -23,8 +24,7 @@ int main(int, char *[])
     std::cout << "'" << ustr::replace_inplace(gr, "ratio", "RATIO", 0) << "'\n";
     std::cout << "'" << ustr::replace_inplace(gr, "RATIO", "ratio", 0) << "'\n";
     gr = ustr::split_paragraph(gr, 40);
-    std::cout << "'''\n"
-              << gr << "\n'''\n";
+    std::cout << "'''\n" << gr << "\n'''\n";
     gr = ustr::merge_paragraph(gr);
     std::cout << "'" << gr << "'\n";
     std::cout << "'" << ustr::capitalize(" two quantities are in the golden ", 3) << "'\n";

@@ -108,7 +108,8 @@ inline std::string calign(std::string s, std::string::size_type width, char fill
 /// @param substitute the substitute.
 /// @param occurences how many occurences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences = 0)
+inline std::string
+replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences = 0)
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
@@ -139,7 +140,8 @@ inline std::string replace(std::string s, const std::string &substring, const st
 /// @param substitute the substitute.
 /// @param occurences how many occurrences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string &replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, unsigned occurences)
+inline std::string &
+replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, unsigned occurences)
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
@@ -191,7 +193,7 @@ inline std::string &strip_inplace(std::string &s, char c)
 /// @return the string splitted into paragraphs.
 inline std::string split_paragraph(std::string s, std::string::size_type width, std::string whitespace = " \t\r")
 {
-    std::string::size_type index = width - 1, index_nl = width - 1, to_trim;
+    std::string::size_type index = width - 1, index_nl, to_trim;
 
     while (index < s.length()) {
         index = s.find_last_of(whitespace, index + 1);
@@ -222,7 +224,8 @@ inline std::string merge_paragraph(std::string s)
         if (s[i] == ' ') {
             // Remove multiple spaces.
             // Go searching for the last ' ' of a series of ' '.
-            for (j = i + 1; (j < s.length()) && (s[j] == ' '); ++j);
+            for (j = i + 1; (j < s.length()) && (s[j] == ' '); ++j)
+                ;
             // Compute the amount of characters to remove.
             std::string::size_type to_remove = (j - i) - 1;
             // Remove the excess spaces.
@@ -230,7 +233,8 @@ inline std::string merge_paragraph(std::string s)
         } else if (s[i] == '\n') {
             // Remove newlines and compress more than two newlines.
             // Go searching for the last '\n' of a series of '\n'.
-            for (j = i + 1; (j < s.length()) && (s[j] == '\n'); ++j);
+            for (j = i + 1; (j < s.length()) && (s[j] == '\n'); ++j)
+                ;
             // Compute the amount of characters to remove. Take advantage of bool,
             //  because if we have more than 1 '\n' it means that we need to remove
             //  all of them except one.

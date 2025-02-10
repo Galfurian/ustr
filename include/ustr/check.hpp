@@ -7,9 +7,9 @@
 
 #pragma once
 
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 namespace ustr
 {
@@ -43,10 +43,7 @@ struct compare_char_t {
     /// @param ch1 The second character.
     /// @return true if the characters are equal.
     /// @return false otherwise.
-    inline bool operator()(char ch0, char ch1) const
-    {
-        return ustr::details::compare_char(ch0, ch1, _sensitive);
-    }
+    inline bool operator()(char ch0, char ch1) const { return ustr::details::compare_char(ch0, ch1, _sensitive); }
 
 private:
     /// @brief Enables case-sensitive check.
@@ -117,7 +114,8 @@ inline bool end_with(const std::string &s, const std::string &suffix, bool sensi
 /// @param sensitive enables case-sensitive check.
 /// @param min_length the minimum number of characters for the prefix.
 /// @return true if the prefix is an approved abbreviation of s, false otherwise.
-inline bool is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive = false, std::size_t min_length = 1)
+inline bool
+is_abbreviation_of(const std::string &prefix, const std::string &s, bool sensitive = false, std::size_t min_length = 1)
 {
     if (&prefix == &s) {
         return true;
@@ -166,7 +164,8 @@ inline std::size_t count(const std::string &s, const std::string &sub_s, bool se
 {
     std::size_t occurrences          = 0;
     std::string::difference_type pos = 0, length = static_cast<std::string::difference_type>(sub_s.length());
-    while ((std::search(s.begin() + pos, s.end(), sub_s.begin(), sub_s.end(), details::compare_char_t(sensitive))) != s.end()) {
+    while ((std::search(s.begin() + pos, s.end(), sub_s.begin(), sub_s.end(), details::compare_char_t(sensitive))) !=
+           s.end()) {
         ++occurrences, pos += length;
     }
     return occurrences;

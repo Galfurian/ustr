@@ -21,6 +21,7 @@ endif()
 
 option(STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(WARNINGS_AS_ERRORS "Treat all warnings as errors" OFF)
+
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_TESTS "Build tests" ON)
 
@@ -43,6 +44,8 @@ mark_as_advanced(FORCE
 # -----------------------------------------------------------------------------
 
 find_package(Doxygen)
+
+find_program(CLANG_TIDY_EXE NAMES clang-tidy)
 
 # -----------------------------------------------------------------------------
 # LIBRARY
@@ -164,7 +167,7 @@ if(CLANG_TIDY_EXE)
         "${PROJECT_SOURCE_DIR}/src/*.c"
     )
     add_custom_target(
-        json_clang_tidy
+        ${PROJECT_NAME}_clang_tidy
         COMMAND ${CLANG_TIDY_EXE}
         --p=${CMAKE_BINARY_DIR}
         ${ALL_PROJECT_FILES}
@@ -172,7 +175,7 @@ if(CLANG_TIDY_EXE)
         VERBATIM
     )
     add_custom_target(
-        json_clang_tidy_fix
+        ${PROJECT_NAME}_clang_tidy_fix
         COMMAND ${CLANG_TIDY_EXE}
         --fix
         --p=${CMAKE_BINARY_DIR}

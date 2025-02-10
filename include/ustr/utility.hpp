@@ -63,7 +63,7 @@ inline bool is_number(const std::string &s)
 inline const char *to_human_size(unsigned long bytes)
 {
     static char output[200];
-    const char *suffix[] = { "B", "KB", "MB", "GB", "TB" };
+    const char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
     char length          = sizeof(suffix) / sizeof(suffix[0]);
     int i                = 0;
     double double_bytes  = static_cast<double>(bytes);
@@ -98,7 +98,7 @@ inline const char *decimal_to_binary_string(unsigned long value, unsigned length
 template <typename T>
 inline const char *get_ordinal(T value)
 {
-    static const char suffixes[][3] = { "th", "st", "nd", "rd" };
+    static const char suffixes[][3] = {"th", "st", "nd", "rd"};
     T ord                           = value % 100;
     if (ord / 10 == 1) {
         ord = 0;

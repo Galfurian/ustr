@@ -1,14 +1,14 @@
 
-#include "ustr/utility.hpp"
 #include "ustr/check.hpp"
 #include "ustr/manipulate.hpp"
+#include "ustr/utility.hpp"
 
 #include <iostream>
 
-#define RUN_CHECK(guard)                     \
-    if (!(guard)) {                          \
-        std::cerr << "Fails : " #guard "\n"; \
-        return 1;                            \
+#define RUN_CHECK(guard)                                                                                               \
+    if (!(guard)) {                                                                                                    \
+        std::cerr << "Fails : " #guard "\n";                                                                           \
+        return 1;                                                                                                      \
     }
 
 int main(int, char *[])
