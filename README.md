@@ -1,9 +1,9 @@
 # UStr
 
-[![Ubuntu](https://github.com/Galfurian/cpp_string_utils/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/Galfurian/cpp_string_utils/actions/workflows/ubuntu.yml)
-[![Windows](https://github.com/Galfurian/cpp_string_utils/actions/workflows/windows.yml/badge.svg)](https://github.com/Galfurian/cpp_string_utils/actions/workflows/windows.yml)
-[![MacOS](https://github.com/Galfurian/cpp_string_utils/actions/workflows/macos.yml/badge.svg)](https://github.com/Galfurian/cpp_string_utils/actions/workflows/macos.yml)
-[![Documentation](https://github.com/Galfurian/cpp_string_utils/actions/workflows/documentation.yml/badge.svg)](https://github.com/Galfurian/cpp_string_utils/actions/workflows/documentation.yml)
+[![Ubuntu](https://github.com/Galfurian/ustr/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/Galfurian/ustr/actions/workflows/ubuntu.yml)
+[![Windows](https://github.com/Galfurian/ustr/actions/workflows/windows.yml/badge.svg)](https://github.com/Galfurian/ustr/actions/workflows/windows.yml)
+[![MacOS](https://github.com/Galfurian/ustr/actions/workflows/macos.yml/badge.svg)](https://github.com/Galfurian/ustr/actions/workflows/macos.yml)
+[![Documentation](https://github.com/Galfurian/ustr/actions/workflows/documentation.yml/badge.svg)](https://github.com/Galfurian/ustr/actions/workflows/documentation.yml)
 
 The `ustr` library is a collection of utilities for string manipulation and checking in C++. It provides a set of functions to work with strings, including operations like trimming, case conversion, substring replacement, and more. Whether you need to check if a string starts or ends with a specific substring, or manipulate string content, `ustr` offers a simple and efficient set of functions.
 
