@@ -8,6 +8,7 @@
 #pragma once
 
 #include <algorithm>
+#include <boost/range/algorithm/remove.hpp>
 #include <string>
 #include <vector>
 
@@ -18,7 +19,7 @@ namespace ustr
 /// @param s the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string trim(const std::string &s, const std::string &padchar = " ")
+inline auto trim(const std::string &s, const std::string &padchar = " ") -> std::string
 {
     std::string::size_type left  = s.find_first_not_of(padchar);
     std::string::size_type right = s.find_last_not_of(padchar);
@@ -29,7 +30,7 @@ inline std::string trim(const std::string &s, const std::string &padchar = " ")
 /// @param s the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string ltrim(const std::string &s, const std::string &padchar = " ")
+inline auto ltrim(const std::string &s, const std::string &padchar = " ") -> std::string
 {
     std::string::size_type left = s.find_first_not_of(padchar);
     return (left != std::string::npos) ? s.substr(left) : "";
@@ -39,7 +40,7 @@ inline std::string ltrim(const std::string &s, const std::string &padchar = " ")
 /// @param s the input string.
 /// @param padchar the char that should be removed.
 /// @return the trimmed string.
-inline std::string rtrim(const std::string &s, const std::string &padchar = " ")
+inline auto rtrim(const std::string &s, const std::string &padchar = " ") -> std::string
 {
     std::string::size_type right = s.find_last_not_of(padchar);
     return (right != std::string::npos) ? s.substr(0, right + 1) : "";
@@ -48,10 +49,10 @@ inline std::string rtrim(const std::string &s, const std::string &padchar = " ")
 /// @brief Converts the string to all uper-case.
 /// @param s the input string.
 /// @return the new string.
-inline std::string to_upper(std::string s)
+inline auto to_upper(std::string s) -> std::string
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
-        *it = static_cast<char>(toupper(*it));
+    for (char &it : s) {
+        it = static_cast<char>(toupper(it));
     }
     return s;
 }
@@ -59,10 +60,10 @@ inline std::string to_upper(std::string s)
 /// @brief Converts the string to all lower-case.
 /// @param s the input string.
 /// @return the new string.
-inline std::string to_lower(std::string s)
+inline auto to_lower(std::string s) -> std::string
 {
-    for (std::string::iterator it = s.begin(); it != s.end(); ++it) {
-        *it = static_cast<char>(tolower(*it));
+    for (char &it : s) {
+        it = static_cast<char>(tolower(it));
     }
     return s;
 }
@@ -72,7 +73,7 @@ inline std::string to_lower(std::string s)
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string ralign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto ralign(std::string s, std::string::size_type width, char fill = ' ') -> std::string
 {
     std::string::size_type pad = (width > s.length()) ? (width - s.length()) : 0;
     return s.insert(0, pad, fill);
@@ -83,7 +84,7 @@ inline std::string ralign(std::string s, std::string::size_type width, char fill
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string lalign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto lalign(std::string s, std::string::size_type width, char fill = ' ') -> std::string
 {
     std::string::size_type pad = (width > s.length()) ? (width - s.length()) : 0;
     return s.append(pad, fill);
@@ -94,7 +95,7 @@ inline std::string lalign(std::string s, std::string::size_type width, char fill
 /// @param width the full lenght of the final string.
 /// @param fill the char used to fill the tring.
 /// @return the aligned string.
-inline std::string calign(std::string s, std::string::size_type width, char fill = ' ')
+inline auto calign(std::string s, std::string::size_type width, char fill = ' ') -> std::string
 {
     std::string::size_type len   = s.length();
     std::string::size_type pad   = (width > len) ? (width - len) / 2 : 0;
@@ -102,14 +103,14 @@ inline std::string calign(std::string s, std::string::size_type width, char fill
     return s.insert(0, pad, fill).append(pad + extra, fill);
 }
 
-/// @brief Replaces all occurences of the given substring.
+/// @brief Replaces all count of the given substring.
 /// @param s the input string.
 /// @param substring the substring that should be replaced.
 /// @param substitute the substitute.
-/// @param occurences how many occurences should we replace (0 = all of them).
+/// @param count how many count should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string
-replace(std::string s, const std::string &substring, const std::string &substitute, unsigned occurences = 0)
+inline auto replace(std::string s, const std::string &substring, const std::string &substitute, std::size_t count = 0)
+    -> std::string
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
@@ -119,7 +120,7 @@ replace(std::string s, const std::string &substring, const std::string &substitu
     std::string::size_type pos = 0;
 
     // If 0, replace all occurrences.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? s.length() : count;
 
     while ((pos = s.find(substring, pos)) != std::string::npos && count > 0) {
         s.replace(pos, substring.size(), substitute);
@@ -138,10 +139,11 @@ replace(std::string s, const std::string &substring, const std::string &substitu
 /// @param s the input string.
 /// @param substring the substring that should be replaced.
 /// @param substitute the substitute.
-/// @param occurences how many occurrences should we replace (0 = all of them).
+/// @param count how many occurrences should we replace (0 = all of them).
 /// @return a reference to the modified string.
-inline std::string &
-replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, unsigned occurences)
+inline auto
+replace_inplace(std::string &s, const std::string &substring, const std::string &substitute, std::size_t count = 0)
+    -> std::string &
 {
     // Early exit if the substring is empty (no replacement needed).
     if (substring.empty()) {
@@ -151,7 +153,7 @@ replace_inplace(std::string &s, const std::string &substring, const std::string 
     std::string::size_type pos = 0;
 
     // If 0, replace all occurrences.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? s.length() : count;
 
     while ((pos = s.find(substring, pos)) != std::string::npos && count > 0) {
         s.replace(pos, substring.size(), substitute);
@@ -170,9 +172,9 @@ replace_inplace(std::string &s, const std::string &substring, const std::string 
 /// @param s the input string.
 /// @param c the character to remove.
 /// @return the modified string.
-inline std::string strip(std::string s, char c)
+inline auto strip(std::string s, char c) -> std::string
 {
-    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    s.erase(boost::range::remove(s, c), s.end());
     return s;
 }
 
@@ -180,9 +182,9 @@ inline std::string strip(std::string s, char c)
 /// @param s the input string.
 /// @param c the character to remove.
 /// @return a reference to the modified string.
-inline std::string &strip_inplace(std::string &s, char c)
+inline auto strip_inplace(std::string &s, char c) -> std::string &
 {
-    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    s.erase(boost::range::remove(s, c), s.end());
     return s;
 }
 
@@ -191,9 +193,12 @@ inline std::string &strip_inplace(std::string &s, char c)
 /// @param width the width of the paragraphs.
 /// @param whitespace the filler character.
 /// @return the string splitted into paragraphs.
-inline std::string split_paragraph(std::string s, std::string::size_type width, std::string whitespace = " \t\r")
+inline auto split_paragraph(std::string s, std::string::size_type width, const std::string &whitespace = " \t\r")
+    -> std::string
 {
-    std::string::size_type index = width - 1, index_nl, to_trim;
+    std::string::size_type index    = width - 1;
+    std::string::size_type index_nl = 0;
+    std::string::size_type to_trim  = 0;
 
     while (index < s.length()) {
         index = s.find_last_of(whitespace, index + 1);
@@ -218,14 +223,15 @@ inline std::string split_paragraph(std::string s, std::string::size_type width, 
 /// @brief Transforms a paragraph formatted string into a single line.
 /// @param s the string to manipulate.
 /// @return the single line.
-inline std::string merge_paragraph(std::string s)
+inline auto merge_paragraph(std::string s) -> std::string
 {
     for (std::string::size_type i = 1, j = 1; i < s.length(); ++i) {
         if (s[i] == ' ') {
             // Remove multiple spaces.
             // Go searching for the last ' ' of a series of ' '.
-            for (j = i + 1; (j < s.length()) && (s[j] == ' '); ++j)
+            for (j = i + 1; (j < s.length()) && (s[j] == ' '); ++j) {
                 ;
+            }
             // Compute the amount of characters to remove.
             std::string::size_type to_remove = (j - i) - 1;
             // Remove the excess spaces.
@@ -233,16 +239,17 @@ inline std::string merge_paragraph(std::string s)
         } else if (s[i] == '\n') {
             // Remove newlines and compress more than two newlines.
             // Go searching for the last '\n' of a series of '\n'.
-            for (j = i + 1; (j < s.length()) && (s[j] == '\n'); ++j)
+            for (j = i + 1; (j < s.length()) && (s[j] == '\n'); ++j) {
                 ;
+            }
             // Compute the amount of characters to remove. Take advantage of bool,
             //  because if we have more than 1 '\n' it means that we need to remove
             //  all of them except one.
-            std::string::size_type to_remove = (j - i) - (j - i > 1);
+            std::string::size_type to_remove = (j - i) - static_cast<std::string::size_type>(j - i > 1);
             // Remove the excess newlines.
             s.replace(i, to_remove, " ");
             // Move after the eventual Wanted new-line.
-            i += (j - i > 1);
+            i += static_cast<std::string::size_type>(j - i > 1);
         }
     }
     return s;
@@ -252,10 +259,11 @@ inline std::string merge_paragraph(std::string s)
 /// @param s the input string.
 /// @param delimiter the delimiter which has to be used.
 /// @return the splitted string.
-inline std::vector<std::string> split(std::string const &s, std::string const &delimiter)
+inline auto split(std::string const &s, std::string const &delimiter) -> std::vector<std::string>
 {
     std::vector<std::string> result;
-    std::string::size_type curr = 0, next = 0;
+    std::string::size_type curr = 0;
+    std::string::size_type next = 0;
     while ((next = s.find_first_of(delimiter, curr)) != std::string::npos) {
         if (next - curr > 0) {
             result.push_back(s.substr(curr, next - curr));
@@ -271,9 +279,9 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 
 /// @brief Capitalize the first letter of the string.
 /// @param s the input string.
-/// @param occurences the number of occurrences we need to manipulate (0 = all of them).
+/// @param count the number of occurrences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, unsigned occurences = 1)
+inline auto capitalize(std::string s, std::size_t count = 0) -> std::string
 {
     // Early exit if the string is empty.
     if (s.empty()) {
@@ -281,14 +289,14 @@ inline std::string capitalize(std::string s, unsigned occurences = 1)
     }
 
     // If 0, capitalize all.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? s.length() : count;
 
     for (std::string::size_type i = 0; i < s.length() && count > 0; ++i) {
-        if ((i == 0 && isalpha(s[i])) || (i > 0 && s[i - 1] == ' ')) {
+        if ((i == 0 && (isalpha(s[i]) != 0)) || (i > 0 && s[i - 1] == ' ')) {
             // Capitalize the character.
             s[i] = static_cast<char>(std::toupper(s[i]));
             // Stop once we reach the required number of occurrences.
-            if (--count == 0 && occurences != 0) {
+            if (--count == 0) {
                 break;
             }
         }
@@ -299,9 +307,9 @@ inline std::string capitalize(std::string s, unsigned occurences = 1)
 
 /// @brief Restituisce una stringa con la prima lettera minuscola.
 /// @param s La stringa sorgente.
-/// @param occurences Il numero di occorrenze da modificare (0 = tutte).
+/// @param count Il numero di occorrenze da modificare (0 = tutte).
 /// @return La stringa con la prima lettera minuscola.
-inline std::string decapitalize(std::string s, unsigned occurences = 0)
+inline auto decapitalize(std::string s, std::size_t count = 0) -> std::string
 {
     // Early exit if the string is empty.
     if (s.empty()) {
@@ -309,14 +317,14 @@ inline std::string decapitalize(std::string s, unsigned occurences = 0)
     }
 
     // If 0, decapitalize all.
-    unsigned count = (occurences == 0) ? static_cast<unsigned>(s.length()) : occurences;
+    count = (count == 0) ? s.length() : count;
 
     for (std::string::size_type i = 0; i < s.length() && count > 0; ++i) {
-        if ((i == 0 && isalpha(s[i])) || (i > 0 && s[i - 1] == ' ')) {
+        if ((i == 0 && (isalpha(s[i]) != 0)) || (i > 0 && s[i - 1] == ' ')) {
             // Decapitalize the character.
             s[i] = static_cast<char>(std::tolower(s[i]));
             // Stop once we reach the required number of occurrences.
-            if (--count == 0 && occurences != 0) {
+            if (--count == 0) {
                 break;
             }
         }

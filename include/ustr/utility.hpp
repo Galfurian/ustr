@@ -7,8 +7,11 @@
 
 #pragma once
 
+#include <array>
+#include <bitset>
 #include <cmath>
 #include <cstdlib>
+#include <iomanip>
 #include <sstream>
 
 namespace ustr
@@ -18,9 +21,9 @@ namespace ustr
 /// @param s the string to turn into a number.
 /// @return the number.
 template <typename T>
-inline T to_number(const std::string &s)
+inline auto to_number(const std::string &s) -> T
 {
-    char *pEnd;
+    char *pEnd = nullptr;
     return static_cast<T>(strtol(s.c_str(), &pEnd, 10));
 }
 
@@ -28,9 +31,9 @@ inline T to_number(const std::string &s)
 /// @param s the string to turn into a number.
 /// @return the number.
 template <typename T>
-inline T to_double(const std::string &s)
+inline auto to_double(const std::string &s) -> T
 {
-    char *pEnd;
+    char *pEnd = nullptr;
     return static_cast<T>(strtod(s.c_str(), &pEnd));
 }
 
@@ -38,7 +41,7 @@ inline T to_double(const std::string &s)
 /// @param value the value to transform.
 /// @return the string representation of the value.
 template <typename T>
-inline std::string to_string(const T &value)
+inline auto to_string(const T &value) -> std::string
 {
     std::stringstream ss;
     ss << value;
@@ -49,7 +52,7 @@ inline std::string to_string(const T &value)
 /// @param s the string to check.
 /// @return true if it is a number.
 /// @return false otherwise.
-inline bool is_number(const std::string &s)
+inline auto is_number(const std::string &s) -> bool
 {
     if (s.empty()) {
         return false;
@@ -60,54 +63,59 @@ inline bool is_number(const std::string &s)
 /// @brief Transforms the given amount of bytes to a readable string.
 /// @param bytes The bytes to turn to string.
 /// @return String representing the bytes in human readable form.
-inline const char *to_human_size(unsigned long bytes)
+inline auto to_human_size(unsigned long bytes) -> std::string
 {
-    static char output[200];
-    const char *suffix[] = {"B", "KB", "MB", "GB", "TB"};
-    char length          = sizeof(suffix) / sizeof(suffix[0]);
-    int i                = 0;
-    double double_bytes  = static_cast<double>(bytes);
-    if (bytes > 1024) {
-        for (i = 0; (bytes / 1024) > 0 && i < length - 1; i++, bytes /= 1024) {
-            double_bytes = static_cast<double>(bytes) / 1024.0;
-        }
+    static std::array<const char *, 5> suffix = {"B", "KB", "MB", "GB", "TB"};
+    std::size_t i                             = 0;
+    auto double_bytes                         = static_cast<double>(bytes);
+    while ((bytes >= 1024) && (i < suffix.size() - 1)) {
+        double_bytes = static_cast<double>(bytes) / 1024.0;
+        bytes /= 1024;
+        ++i;
     }
-    snprintf(output, 200, "%.02lf %2s", double_bytes, suffix[i]);
-    return output;
+    // Using stringstream to format the result
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(2) << double_bytes << " " << std::setw(2) << std::right << suffix[i];
+    // Return the formatted string.
+    return oss.str();
 }
 
 /// @brief Transforms the given value to a binary string.
 /// @param value to print.
 /// @param length of the binary output.
 /// @return String representing the binary value.
-inline const char *decimal_to_binary_string(unsigned long value, unsigned length)
+inline auto decimal_to_binary_string(unsigned long value, unsigned length) -> std::string
 {
-    static char buffer[65];
-    for (unsigned i = 0; i < 65; ++i) {
-        buffer[i] = 0;
-    }
-    for (unsigned i = 0, j = 32 - std::min(length, 64U); j < 64; ++i, ++j) {
-        buffer[i] = (value & (1U << (63U - j))) ? '1' : '0';
-    }
-    return buffer;
+    // Use bitset to handle binary conversion
+    std::bitset<64> bits(value);
+    // Get the binary string representation, and ensure it matches the requested
+    // length.
+    std::string binary_str = bits.to_string();
+    // Trim the binary string to the specified length.
+    return binary_str.substr(64 - length);
 }
 
 /// @brief Returns the ordinal that associates with the given number.
 /// @param value the input value.
 /// @return the ordinal suffix.
 template <typename T>
-inline const char *get_ordinal(T value)
+inline auto get_ordinal(T value) -> std::string
 {
-    static const char suffixes[][3] = {"th", "st", "nd", "rd"};
-    T ord                           = value % 100;
+    // Ordinal suffix array.
+    static const std::array<const char *, 4> suffix = {"th", "st", "nd", "rd"};
+    T ord                                           = value % 100;
+    // Handle special case for 11th, 12th, 13th, etc.
     if (ord / 10 == 1) {
         ord = 0;
     }
+    // Get the last digit.
     ord = ord % 10;
+    // If the last digit is > 3, return "th" for all cases like 4th, 5th, etc.
     if (ord > 3) {
         ord = 0;
     }
-    return suffixes[ord];
+    // Construct the ordinal string.
+    return std::to_string(value) + std::string(suffix[static_cast<std::size_t>(ord)]);
 }
 
 } // namespace ustr

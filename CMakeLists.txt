@@ -133,18 +133,11 @@ endif()
 if(BUILD_TESTS)
     # CMake has support for adding tests to a project.
     enable_testing()
-    # Add the test.
-    add_executable(${PROJECT_NAME}_test_check ${PROJECT_SOURCE_DIR}/tests/test_check.cpp)
-    # Liking for the test.
-    target_link_libraries(${PROJECT_NAME}_test_check ${PROJECT_NAME})
-    # Add the test.
-    add_test(${PROJECT_NAME}_test_check_run ${PROJECT_NAME}_test_check)
-    # Add the test.
-    add_executable(${PROJECT_NAME}_test_manipulation ${PROJECT_SOURCE_DIR}/tests/test_manipulation.cpp)
-    # Liking for the test.
-    target_link_libraries(${PROJECT_NAME}_test_manipulation ${PROJECT_NAME})
-    # Add the test.
-    add_test(${PROJECT_NAME}_test_manipulation_run ${PROJECT_NAME}_test_manipulation)
+
+    add_executable(${PROJECT_NAME}_test_all ${PROJECT_SOURCE_DIR}/tests/test_all.cpp)
+    target_link_libraries(${PROJECT_NAME}_test_all ${PROJECT_NAME})
+    add_test(${PROJECT_NAME}_test_all_run ${PROJECT_NAME}_test_all)
+
 endif()
 
 # -----------------------------------------------------------------------------
