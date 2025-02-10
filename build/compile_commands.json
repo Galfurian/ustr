@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/enrico/repository/personal/fsmlib/build",
+  "command": "/usr/bin/g++  -I/home/enrico/repository/personal/fsmlib/examples -I/home/enrico/repository/personal/fsmlib/include -g -Wall -Wextra -Wconversion -pedantic -Wshadow -Wnon-virtual-dtor -Wnull-dereference -Wformat=2 -Woverloaded-virtual -Wfloat-equal -o CMakeFiles/fsmlib_usage.dir/examples/usage/main.cpp.o -c /home/enrico/repository/personal/fsmlib/examples/usage/main.cpp",
+  "file": "/home/enrico/repository/personal/fsmlib/examples/usage/main.cpp",
+  "output": "CMakeFiles/fsmlib_usage.dir/examples/usage/main.cpp.o"
+}
+]
