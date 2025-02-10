@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -163,6 +164,26 @@ inline std::string &replace_inplace(std::string &s, const std::string &substring
     return s;
 }
 
+/// @brief Strips the given character from the string.
+/// @param s the input string.
+/// @param c the character to remove.
+/// @return the modified string.
+inline std::string strip(std::string s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    return s;
+}
+
+/// @brief Strips the given character from the string.
+/// @param s the input string.
+/// @param c the character to remove.
+/// @return a reference to the modified string.
+inline std::string &strip_inplace(std::string &s, char c)
+{
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    return s;
+}
+
 /// @brief Transforms a single-line string a paragraph formatted string.
 /// @param s the input string.
 /// @param width the width of the paragraphs.
@@ -248,7 +269,7 @@ inline std::vector<std::string> split(std::string const &s, std::string const &d
 /// @param s the input string.
 /// @param occurences the number of occurrences we need to manipulate (0 = all of them).
 /// @return the string with the first letter capitalized.
-inline std::string capitalize(std::string s, unsigned occurences = 0)
+inline std::string capitalize(std::string s, unsigned occurences = 1)
 {
     // Early exit if the string is empty.
     if (s.empty()) {
