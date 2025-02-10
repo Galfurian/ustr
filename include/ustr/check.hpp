@@ -1,6 +1,9 @@
 /// @file check.hpp
 /// @author Enrico Fraccaroli (enry.frak@gmail.com)
 /// @brief List of functions to check strings.
+/// @copyright
+/// Copyright (c) 2024-2025. All rights reserved.
+/// Licensed under the MIT License. See LICENSE file in the project root for details.
 
 #pragma once
 

@@ -28,8 +28,8 @@ int main(int, char *[])
     gr = ustr::merge_paragraph(gr);
     std::cout << "'" << gr << "'\n";
     std::cout << "'" << ustr::capitalize(" two quantities are in the golden ", 3) << "'\n";
-    std::cout << "'" << ustr::capitalize(" two quantities are in the golden ", -1) << "'\n";
+    std::cout << "'" << ustr::capitalize(" two quantities are in the golden ", 0) << "'\n";
     std::cout << "'" << ustr::decapitalize(" Two Quantities Are In The Golden ", 3) << "'\n";
-    std::cout << "'" << ustr::decapitalize(" Two Quantities Are In The Golden ", -1) << "'\n";
+    std::cout << "'" << ustr::decapitalize(" Two Quantities Are In The Golden ", 0) << "'\n";
     return 0;
 }
