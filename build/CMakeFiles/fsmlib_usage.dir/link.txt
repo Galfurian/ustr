@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/fsmlib_usage.dir/examples/usage/main.cpp.o -o fsmlib_usage 
